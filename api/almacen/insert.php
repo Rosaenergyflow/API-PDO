@@ -11,20 +11,20 @@ Header('Access-Control-Allow-Method: POST');
 
 // Including required files.
 include_once('../../config/Database.php');
-include_once('../../models/Productos.php');
+include_once('../../models/Almacen.php');
 
 // Connecting with database.
 
 $database = new Database;
 $db =  $database->connect();
 
-$producto = new Producto($db);
+$almacen = new Almacen($db);
 $data = json_decode(file_get_contents("php://input"));
 
 if(count($_POST)){
     
 
-    // Creating new producto from user input.
+    // Creating new almacen from user input.
 
     $params = [
         'id' => $_POST['id'],
@@ -53,7 +53,7 @@ if(count($_POST)){
         'descuento6' => $_POST['descuento6'],
         'existencia' => $_POST['existencia'],
         'iva' => $_POST['iva'],
-        'tipo_producto' => $_POST['tipo_producto'],
+        'tipo_Producto' => $_POST['tipo_Producto'],
         'mostrar' => $_POST['mostrar'],
         'raiz' => $_POST['raiz'],
         'vender' => $_POST['vender'],
@@ -79,14 +79,14 @@ if(count($_POST)){
         'longitud'=> $_POST['longitud'],
     ];
 
-    if($producto->create_new_producto($params))
+    if($almacen->create_new_almacen($params))
     {
-        echo json_encode(['message' => 'Productos added successfully']);
+        echo json_encode(['message' => 'Almacen added successfully']);
     }
 }
 else if(isset($data))
 {
-     // Creating new producto from user input.
+     // Creating new almacen from user input.
 
      $params = [
         'id' => $data -> id,
@@ -115,7 +115,7 @@ else if(isset($data))
         'descuento6' => $data -> descuento6,
         'existencia' => $data -> existencia,
         'iva' => $data -> iva,
-        'tipo_producto' => $data -> tipo_producto,
+        'tipo_Producto' => $data -> tipo_Producto,
         'mostrar' => $data -> mostrar,
         'raiz' => $data -> raiz,
         'vender' => $data -> vender,
@@ -141,8 +141,8 @@ else if(isset($data))
         'longitu' => $data -> longitud,
     ];
 
-    if($producto->create_new_producto($params))
+    if($almacen->create_new_almacen($params))
     {
-        echo json_encode(['message' => 'Productos added successfully']);
+        echo json_encode(['message' => 'Almacen added successfully']);
     }
 }

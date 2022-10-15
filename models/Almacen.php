@@ -1,16 +1,19 @@
 <?php
-/////////////////////////////////////////////////////////
-//////////////  MODELO PARA TABLA ALMACEN  //////////////
-/////////////////////////////////////////////////////////
+
+/********************************************************
+    MODELO PARA TABLA ALMACEN        
+    (Tabla donde estan los almacen)
+*********************************************************/
+
 
 
 error_reporting(E_ALL);
 ini_set('display_error', 1);
 
 
-class Producto{
+class Almacen{
     
-    // Producto Properties.
+    // Almacen Properties.
     public $id;  
     public $codigo;  
     public $texto;  
@@ -37,7 +40,7 @@ class Producto{
     public $descuento6;  
     public $existencia;  
     public $iva;  
-    public $tipo_producto;  
+    public $tipo_almacen;  
     public $mostrar;  
     public $raiz;  
     public $vender;  
@@ -74,43 +77,43 @@ class Producto{
     }
 
 
-    // Method to read all the saved productos from database.
+    // Method to read all the saved almacen from database.
 
-    public function readProductos()
+    public function readAlmacen()
     {
-        //Query for reading productos from table.
+        //Query for reading almacen from table.
         
         $query = 'SELECT * FROM '.$this -> table ;
 
-        $producto = $this -> connection->prepare($query);
+        $almacen = $this -> connection->prepare($query);
 
-        $producto->execute();
+        $almacen->execute();
 
-        return $producto;
+        return $almacen;
     }
 
 
-    // Method for reading single producto.
+    // Method for reading single almacen.
 
-    public function read_single_producto($id)
+    public function read_single_almacen($id)
     {
         $this -> id = $id;
 
-        //Query for reading productos from table.
+        //Query for reading almacen from table.
         
         $query = 'SELECT * FROM '.$this -> table.' WHERE '.$id.' = id';
 
-        $producto = $this -> connection->prepare($query);
+        $almacen = $this -> connection->prepare($query);
 
-        //$producto->execute([$this -> id]);
-        $producto->bindValue(1, $this -> id, PDO::PARAM_INT);
-        $producto->execute();
-        return $producto;
+        //$almacen->execute([$this -> id]);
+        $almacen->bindValue(1, $this -> id, PDO::PARAM_INT);
+        $almacen->execute();
+        return $almacen;
     }
 
     // Method to create new records.
 
-    public function create_new_producto($params)
+    public function create_new_almacen($params)
     {
         try
         {
@@ -141,7 +144,7 @@ class Producto{
             $this -> descuento6 = $params['descuento6'];
             $this -> existencia = $params['existencia'];
             $this -> iva = $params['iva'];
-            $this -> tipo_producto = $params['tipo_producto'];
+            $this -> tipo_almacen = $params['tipo_almacen'];
             $this -> mostrar = $params['mostrar'];
             $this -> raiz = $params['raiz'];
             $this -> vender = $params['vender'];
@@ -166,7 +169,7 @@ class Producto{
             $this -> categoria = $params['categoria'];
             $this -> longitud= $params['longitud'];
 
-            // Query to store new producto in database.
+            // Query to store new almacen in database.
 
             $query = 'INSERT INTO '. $this -> table .'
                     SET 
@@ -196,7 +199,7 @@ class Producto{
                     descuento6 = :descuento6,
                     existencia = :existencia,
                     iva = :iva,
-                    tipo_producto = :tipo_producto,
+                    tipo_almacen = :tipo_almacen,
                     mostrar = :mostrar,
                     raiz = :raiz,
                     vender = :vender,
@@ -221,60 +224,60 @@ class Producto{
                     categoria = :categoria,
                     longitud= :longitud';
             
-            $producto = $this -> connection->prepare($query);
+            $almacen = $this -> connection->prepare($query);
 
-            $producto->binValue('id' , $this -> id);
-            $producto->binValue('codigo' , $this -> codigo);
-            $producto->binValue('texto' , $this -> texto);
-            $producto->binValue('slogan' , $this -> slogan);
-            $producto->binValue('marca' , $this -> marca);
-            $producto->binValue('familia' , $this -> familia);
-            $producto->binValue('otras_familias' , $this -> otras_familias);
-            $producto->binValue('alta' , $this -> alta);
-            $producto->binValue('descripcion_corta' , $this -> descripcion_corta);
-            $producto->binValue('descripcion_larga' , $this -> descripcion_larga);
-            $producto->binValue('venta' , $this -> venta);
-            $producto->binValue('descuento' , $this -> descuento);
-            $producto->binValue('venta1' , $this -> venta1);
-            $producto->binValue('descuento1' , $this -> descuento1);
-            $producto->binValue('venta2' , $this -> venta2);
-            $producto->binValue('descuento2' , $this -> descuento2);
-            $producto->binValue('venta3' , $this -> venta3);
-            $producto->binValue('descuento3' , $this -> descuento3);
-            $producto->binValue('venta4' , $this -> venta4);
-            $producto->binValue('descuento4' , $this -> descuento4);
-            $producto->binValue('venta5' , $this -> venta5);
-            $producto->binValue('descuento5' , $this -> descuento5);
-            $producto->binValue('venta6' , $this -> venta6);
-            $producto->binValue('descuento6' , $this -> descuento6);
-            $producto->binValue('existencia' , $this -> existencia);
-            $producto->binValue('iva' , $this -> iva);
-            $producto->binValue('tipo_producto' , $this -> tipo_producto);
-            $producto->binValue('mostrar' , $this -> mostrar);
-            $producto->binValue('raiz' , $this ->  raiz);
-            $producto->binValue('vender' , $this -> vender);
-            $producto->binValue('peso' , $this ->  peso);
-            $producto->binValue('maximo' , $this -> maximo);
-            $producto->binValue('destacado' , $this -> destacado);
-            $producto->binValue('grupo' , $this -> grupo);
-            $producto->binValue('peligroso' , $this -> peligroso);
-            $producto->binValue('modelo' , $this -> modelo);
-            $producto->binValue('matricula' , $this -> matricula);
-            $producto->binValue('modelo_vehiculo' , $this -> modelo_vehiculo);
-            $producto->binValue('voluminoso' , $this -> voluminoso);
-            $producto->binValue('color' , $this -> color);
-            $producto->binValue('minimo' , $this -> minimo);
-            $producto->binValue('oferta' , $this -> oferta);
-            $producto->binValue('limite' , $this -> limite);
-            $producto->binValue('corta_ingles' , $this -> corta_ingles);
-            $producto->binValue('larga_ingles' , $this -> larga_ingles);
-            $producto->binValue('bodega' , $this -> bodega);
-            $producto->binValue('unidadescaja' , $this -> unidadescaja);
-            $producto->binValue('origen' , $this -> origen);
-            $producto->binValue('categoria' , $this -> categoria);
-            $producto->binValue('longitud' , $this -> longitud);
+            $almacen->binValue('id' , $this -> id);
+            $almacen->binValue('codigo' , $this -> codigo);
+            $almacen->binValue('texto' , $this -> texto);
+            $almacen->binValue('slogan' , $this -> slogan);
+            $almacen->binValue('marca' , $this -> marca);
+            $almacen->binValue('familia' , $this -> familia);
+            $almacen->binValue('otras_familias' , $this -> otras_familias);
+            $almacen->binValue('alta' , $this -> alta);
+            $almacen->binValue('descripcion_corta' , $this -> descripcion_corta);
+            $almacen->binValue('descripcion_larga' , $this -> descripcion_larga);
+            $almacen->binValue('venta' , $this -> venta);
+            $almacen->binValue('descuento' , $this -> descuento);
+            $almacen->binValue('venta1' , $this -> venta1);
+            $almacen->binValue('descuento1' , $this -> descuento1);
+            $almacen->binValue('venta2' , $this -> venta2);
+            $almacen->binValue('descuento2' , $this -> descuento2);
+            $almacen->binValue('venta3' , $this -> venta3);
+            $almacen->binValue('descuento3' , $this -> descuento3);
+            $almacen->binValue('venta4' , $this -> venta4);
+            $almacen->binValue('descuento4' , $this -> descuento4);
+            $almacen->binValue('venta5' , $this -> venta5);
+            $almacen->binValue('descuento5' , $this -> descuento5);
+            $almacen->binValue('venta6' , $this -> venta6);
+            $almacen->binValue('descuento6' , $this -> descuento6);
+            $almacen->binValue('existencia' , $this -> existencia);
+            $almacen->binValue('iva' , $this -> iva);
+            $almacen->binValue('tipo_almacen' , $this -> tipo_almacen);
+            $almacen->binValue('mostrar' , $this -> mostrar);
+            $almacen->binValue('raiz' , $this ->  raiz);
+            $almacen->binValue('vender' , $this -> vender);
+            $almacen->binValue('peso' , $this ->  peso);
+            $almacen->binValue('maximo' , $this -> maximo);
+            $almacen->binValue('destacado' , $this -> destacado);
+            $almacen->binValue('grupo' , $this -> grupo);
+            $almacen->binValue('peligroso' , $this -> peligroso);
+            $almacen->binValue('modelo' , $this -> modelo);
+            $almacen->binValue('matricula' , $this -> matricula);
+            $almacen->binValue('modelo_vehiculo' , $this -> modelo_vehiculo);
+            $almacen->binValue('voluminoso' , $this -> voluminoso);
+            $almacen->binValue('color' , $this -> color);
+            $almacen->binValue('minimo' , $this -> minimo);
+            $almacen->binValue('oferta' , $this -> oferta);
+            $almacen->binValue('limite' , $this -> limite);
+            $almacen->binValue('corta_ingles' , $this -> corta_ingles);
+            $almacen->binValue('larga_ingles' , $this -> larga_ingles);
+            $almacen->binValue('bodega' , $this -> bodega);
+            $almacen->binValue('unidadescaja' , $this -> unidadescaja);
+            $almacen->binValue('origen' , $this -> origen);
+            $almacen->binValue('categoria' , $this -> categoria);
+            $almacen->binValue('longitud' , $this -> longitud);
 
-            if($producto->execute())
+            if($almacen->execute())
             {
                 return true;
             }
@@ -288,7 +291,7 @@ class Producto{
         }
     }
 
-    // Method for updating productos.
+    // Method for updating almacen.
 
     public function update($params)
     {
@@ -322,7 +325,7 @@ class Producto{
             $this -> descuento6 = $params['descuento6'];
             $this -> existencia = $params['existencia'];
             $this -> iva = $params['iva'];
-            $this -> tipo_producto = $params['tipo_producto'];
+            $this -> tipo_almacen = $params['tipo_almacen'];
             $this -> mostrar = $params['mostrar'];
             $this -> raiz = $params['raiz'];
             $this -> vender = $params['vender'];
@@ -378,7 +381,7 @@ class Producto{
                 descuento6 = :descuento6,
                 existencia = :existencia,
                 iva = :iva,
-                tipo_producto = :tipo_producto,
+                tipo_almacen = :tipo_almacen,
                 mostrar = :mostrar,
                 raiz = :raiz,
                 vender = :vender,
@@ -403,60 +406,60 @@ class Producto{
                 categoria = :categoria,
                 longitud= :longitud';
 
-              $producto = $this -> connection->prepare($query);
+              $almacen = $this -> connection->prepare($query);
 
-              $producto->binValue('id' , $this -> id);
-              $producto->binValue('codigo' , $this -> codigo);
-              $producto->binValue('texto' , $this -> texto);
-              $producto->binValue('slogan' , $this -> slogan);
-              $producto->binValue('marca' , $this -> marca);
-              $producto->binValue('familia' , $this -> familia);
-              $producto->binValue('otras_familias' , $this -> otras_familias);
-              $producto->binValue('alta' , $this -> alta);
-              $producto->binValue('descripcion_corta' , $this -> descripcion_corta);
-              $producto->binValue('descripcion_larga' , $this -> descripcion_larga);
-              $producto->binValue('venta' , $this -> venta);
-              $producto->binValue('descuento' , $this -> descuento);
-              $producto->binValue('venta1' , $this -> venta1);
-              $producto->binValue('descuento1' , $this -> descuento1);
-              $producto->binValue('venta2' , $this -> venta2);
-              $producto->binValue('descuento2' , $this -> descuento2);
-              $producto->binValue('venta3' , $this -> venta3);
-              $producto->binValue('descuento3' , $this -> descuento3);
-              $producto->binValue('venta4' , $this -> venta4);
-              $producto->binValue('descuento4' , $this -> descuento4);
-              $producto->binValue('venta5' , $this -> venta5);
-              $producto->binValue('descuento5' , $this -> descuento5);
-              $producto->binValue('venta6' , $this -> venta6);
-              $producto->binValue('descuento6' , $this -> descuento6);
-              $producto->binValue('existencia' , $this -> existencia);
-              $producto->binValue('iva' , $this -> iva);
-              $producto->binValue('tipo_producto' , $this -> tipo_producto);
-              $producto->binValue('mostrar' , $this -> mostrar);
-              $producto->binValue('raiz' , $this ->  raiz);
-              $producto->binValue('vender' , $this -> vender);
-              $producto->binValue('peso' , $this ->  peso);
-              $producto->binValue('maximo' , $this -> maximo);
-              $producto->binValue('destacado' , $this -> destacado);
-              $producto->binValue('grupo' , $this -> grupo);
-              $producto->binValue('peligroso' , $this -> peligroso);
-              $producto->binValue('modelo' , $this -> modelo);
-              $producto->binValue('matricula' , $this -> matricula);
-              $producto->binValue('modelo_vehiculo' , $this -> modelo_vehiculo);
-              $producto->binValue('voluminoso' , $this -> voluminoso);
-              $producto->binValue('color' , $this -> color);
-              $producto->binValue('minimo' , $this -> minimo);
-              $producto->binValue('oferta' , $this -> oferta);
-              $producto->binValue('limite' , $this -> limite);
-              $producto->binValue('corta_ingles' , $this -> corta_ingles);
-              $producto->binValue('larga_ingles' , $this -> larga_ingles);
-              $producto->binValue('bodega' , $this -> bodega);
-              $producto->binValue('unidadescaja' , $this -> unidadescaja);
-              $producto->binValue('origen' , $this -> origen);
-              $producto->binValue('categoria' , $this -> categoria);
-              $producto->binValue('longitud' , $this -> longitud);
+              $almacen->binValue('id' , $this -> id);
+              $almacen->binValue('codigo' , $this -> codigo);
+              $almacen->binValue('texto' , $this -> texto);
+              $almacen->binValue('slogan' , $this -> slogan);
+              $almacen->binValue('marca' , $this -> marca);
+              $almacen->binValue('familia' , $this -> familia);
+              $almacen->binValue('otras_familias' , $this -> otras_familias);
+              $almacen->binValue('alta' , $this -> alta);
+              $almacen->binValue('descripcion_corta' , $this -> descripcion_corta);
+              $almacen->binValue('descripcion_larga' , $this -> descripcion_larga);
+              $almacen->binValue('venta' , $this -> venta);
+              $almacen->binValue('descuento' , $this -> descuento);
+              $almacen->binValue('venta1' , $this -> venta1);
+              $almacen->binValue('descuento1' , $this -> descuento1);
+              $almacen->binValue('venta2' , $this -> venta2);
+              $almacen->binValue('descuento2' , $this -> descuento2);
+              $almacen->binValue('venta3' , $this -> venta3);
+              $almacen->binValue('descuento3' , $this -> descuento3);
+              $almacen->binValue('venta4' , $this -> venta4);
+              $almacen->binValue('descuento4' , $this -> descuento4);
+              $almacen->binValue('venta5' , $this -> venta5);
+              $almacen->binValue('descuento5' , $this -> descuento5);
+              $almacen->binValue('venta6' , $this -> venta6);
+              $almacen->binValue('descuento6' , $this -> descuento6);
+              $almacen->binValue('existencia' , $this -> existencia);
+              $almacen->binValue('iva' , $this -> iva);
+              $almacen->binValue('tipo_almacen' , $this -> tipo_almacen);
+              $almacen->binValue('mostrar' , $this -> mostrar);
+              $almacen->binValue('raiz' , $this ->  raiz);
+              $almacen->binValue('vender' , $this -> vender);
+              $almacen->binValue('peso' , $this ->  peso);
+              $almacen->binValue('maximo' , $this -> maximo);
+              $almacen->binValue('destacado' , $this -> destacado);
+              $almacen->binValue('grupo' , $this -> grupo);
+              $almacen->binValue('peligroso' , $this -> peligroso);
+              $almacen->binValue('modelo' , $this -> modelo);
+              $almacen->binValue('matricula' , $this -> matricula);
+              $almacen->binValue('modelo_vehiculo' , $this -> modelo_vehiculo);
+              $almacen->binValue('voluminoso' , $this -> voluminoso);
+              $almacen->binValue('color' , $this -> color);
+              $almacen->binValue('minimo' , $this -> minimo);
+              $almacen->binValue('oferta' , $this -> oferta);
+              $almacen->binValue('limite' , $this -> limite);
+              $almacen->binValue('corta_ingles' , $this -> corta_ingles);
+              $almacen->binValue('larga_ingles' , $this -> larga_ingles);
+              $almacen->binValue('bodega' , $this -> bodega);
+              $almacen->binValue('unidadescaja' , $this -> unidadescaja);
+              $almacen->binValue('origen' , $this -> origen);
+              $almacen->binValue('categoria' , $this -> categoria);
+              $almacen->binValue('longitud' , $this -> longitud);
 
-              if($producto->execute())
+              if($almacen->execute())
               {
                   return true;
               }
@@ -469,9 +472,9 @@ class Producto{
         }
     }
 
-    // Method to delete producto from database.
+    // Method to delete almacen from database.
 
-    public function destroy_producto($id)
+    public function destroy_almacen($id)
     {
         try
         {
@@ -484,11 +487,11 @@ class Producto{
               $query = 'DELETE FROM '.$this -> table.' 
                    WHERE id = :id';
 
-              $producto = $this -> connection->prepare($query);
+              $almacen = $this -> connection->prepare($query);
 
-              $producto->bindValue('id', $this -> id);
+              $almacen->bindValue('id', $this -> id);
               
-              if($producto->execute())
+              if($almacen->execute())
               {
                   return true;
               }

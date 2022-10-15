@@ -1,5 +1,7 @@
 <?php
-
+/**********************************************************
+    SINGLE ADMIN   
+***********************************************************/
 error_reporting(E_ALL);
 ini_set('display_error', 1);
 
@@ -11,82 +13,36 @@ Header('Access-Control-Allow-Method: POST');
 
 // Including required files.
 include_once('../../config/Database.php');
-include_once('../../models/Producto.php');
+include_once('../../models/Admins.php');
 
 // Connecting with database.
 
 $database = new Database;
 $db =  $database->connect();
 
-$post = new Producto($db);
+$post = new Admin($db);
 
 if(isset($_GET['id']))
 {
-    $data =  $post->read_single_producto($_GET['id']);
+    $data =  $post->read_single_admin($_GET['id']);
     
     if($data->rowCount())
     {
-        $productos = [];
+        $admin = [];
 
-        // re-aggrange the productos data.
+        // re-aggrange the admin data.
     
         while($row = $data->fetch(PDO::FETCH_OBJ))
         {
-            $productos[$row->id] = [
+            $admin[$row->id] = [
                 'id' => $row -> id,
-                'codigo' => $row -> codigo,
-                'texto' => $row -> texto,
-                'slogan' => $row -> params,
-                'marca' => $row -> marca,
-                'familia' => $row -> familia,
-                'otras_familias' => $row -> otras_familias,
-                'alta' => $row -> alta,
-                'descripcion_corta' => $row -> descripcion_corta,
-                'descripcion_larga' => $row -> descripcion_larga,
-                'venta' => $row -> venta,
-                'descuento' => $row -> descuento,
-                'venta1' => $row -> venta1,
-                'descuento1' => $row -> descuento1,
-                'venta2' => $row -> venta2,
-                'descuento2' => $row -> descuento2,
-                'venta3' => $row -> venta3,
-                'descuento3' => $row -> descuento3,
-                'venta4' => $row -> venta4,
-                'descuento4' => $row -> descuento4,
-                'venta5' => $row -> venta5,
-                'descuento5' => $row -> descuento5,
-                'venta6' => $row -> venta6,
-                'descuento6' => $row -> descuento6,
-                'existencia' => $row -> existencia,
-                'iva' => $row -> iva,
-                'tipo_producto' => $row -> tipo_producto,
-                'mostrar' => $row -> mostrar,
-                'raiz' => $row -> raiz,
-                'vender' => $row -> vender,
-                'peso' => $row -> peso,
-                'maximo' => $row -> maximo,
-                'destacado' => $row -> destacado,
-                'grupo' => $row -> grupo,
-                'peligroso' => $row -> peligroso,
-                'modelo' => $row -> modelo,
-                'matricula' => $row -> matricula,
-                'modelo_vehiculo' => $row -> modelo_vehiculo,
-                'voluminoso' => $row -> voluminoso,
-                'color' => $row -> color,
-                'minimo' => $row -> minimo,
-                'oferta' => $row -> oferta,
-                'limite' => $row -> limite,
-                'corta_ingles' => $row -> corta_ingles,
-                'larga_ingles' => $row -> larga_ingles,
-                'bodega' => $row -> bodega,
-                'unidadescaja' => $row -> unidadescaja,
-                'origen' => $row -> origen,
-                'categoria' => $row -> categoria,
-                'longitu' => $row -> longitud,
+                'correo' => $row -> correo,
+                'usuario' => $row -> usuario,
+                'clave' => $row -> clave,
             ];
         }
     
-        echo json_encode($productos);
+        echo json_encode($admin);
     }
     else
     {

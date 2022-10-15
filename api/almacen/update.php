@@ -11,14 +11,14 @@ Header('Access-Control-Allow-Method: POST');
 
 // Including required files.
 include_once('../../config/Database.php');
-include_once('../../models/Producto.php');
+include_once('../../models/Almacen.php');
 
 // Connecting with database.
 
 $database = new Database;
 $db =  $database->connect();
 
-$post = new Producto($db);
+$post = new Almacen($db);
 $data = json_decode(file_get_contents("php://input"));
 
 
@@ -53,7 +53,7 @@ if(isset($data))
         'descuento6' => $descuento6 -> descuento6,
         'existencia' => $existencia -> existencia,
         'iva' => $iva -> iva,
-        'tipo_producto' => $tipo_producto -> tipo_producto,
+        'tipo_Producto' => $tipo_Producto -> tipo_Producto,
         'mostrar' => $mostrar -> mostrar,
         'raiz' => $raiz -> raiz,
         'vender' => $vender -> vender,
@@ -81,7 +81,7 @@ if(isset($data))
 
     if($post->update($params))
     {
-        echo json_encode(['message' => 'Producto Updated successfully']);
+        echo json_encode(['message' => 'Almacen Updated successfully']);
     }
 
 }

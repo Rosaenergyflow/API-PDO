@@ -18,15 +18,15 @@ include_once('../../models/Post.php');
 $database = new Database;
 $db =  $database->connect();
 
-$producto = new Producto($db);
+$almacen = new Almacen($db);
 $data = json_decode(file_get_contents("php://input"));
 
 
 if(isset($data))
 {
-     // Deleting producto from user input.
+     // Deleting almacen from user input.
 
-    if($producto->destroy_producto($data->id))
+    if($almacen->destroy_almacen($data->id))
     {
         echo json_encode(['message' => 'Post Deleted successfully']);
     }

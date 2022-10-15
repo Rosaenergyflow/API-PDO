@@ -1,5 +1,8 @@
 <?php
-
+/**********************************************************
+    INSERT ADMIN O ADMINS  
+    (administradores de la tienda)
+***********************************************************/
 error_reporting(E_ALL);
 ini_set('display_error', 1);
 

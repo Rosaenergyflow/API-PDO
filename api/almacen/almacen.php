@@ -11,28 +11,28 @@ Header('Access-Control-Allow-Method: POST');
 
 // Including required files.
 include_once('../../config/Database.php');
-include_once('../../models/Productos.php');
+include_once('../../models/Almacen.php');
 
 // Connecting with database.
 
 $database = new Database;
 $db =  $database->connect();
 
-$producto = new Producto($db);
+$almacen = new Almacen($db);
 
-$data = $producto->readProductos();
+$data = $almacen->readAlmacen();
 
-// If there is productos in database.
+// If there is almacen in database.
 
 if($data->rowCount())
 {
-    $productos = [];
+    $almacen = [];
 
-    // re-aggrange the productos data.
+    // re-aggrange the almacen data.
 
     while($row = $data->fetch(PDO::FETCH_OBJ))
     {
-        $productos[$row->id] = [
+        $almacen[$row->id] = [
             'id' => $row -> id,
             'codigo' => $row -> codigo,
             'texto' => $row -> texto,
@@ -86,11 +86,11 @@ if($data->rowCount())
         ];
     }
 
-    echo json_encode($productos);
+    echo json_encode($almacen);
 
 
 }
 else
 {
-    echo json_encode(['message' => ' No productos found']);
+    echo json_encode(['message' => ' No almacen found']);
 }

@@ -11,28 +11,28 @@ Header('Access-Control-Allow-Method: POST');
 
 // Including required files.
 include_once('../../config/Database.php');
-include_once('../../models/Producto.php');
+include_once('../../models/Almacen.php');
 
 // Connecting with database.
 
 $database = new Database;
 $db =  $database->connect();
 
-$post = new Producto($db);
+$post = new Almacen($db);
 
 if(isset($_GET['id']))
 {
-    $data =  $post->read_single_producto($_GET['id']);
+    $data =  $post->read_single_almacen($_GET['id']);
     
     if($data->rowCount())
     {
-        $productos = [];
+        $almacen = [];
 
-        // re-aggrange the productos data.
+        // re-aggrange the almacen data.
     
         while($row = $data->fetch(PDO::FETCH_OBJ))
         {
-            $productos[$row->id] = [
+            $almacen[$row->id] = [
                 'id' => $row -> id,
                 'codigo' => $row -> codigo,
                 'texto' => $row -> texto,
@@ -59,7 +59,7 @@ if(isset($_GET['id']))
                 'descuento6' => $row -> descuento6,
                 'existencia' => $row -> existencia,
                 'iva' => $row -> iva,
-                'tipo_producto' => $row -> tipo_producto,
+                'tipo_Producto' => $row -> tipo_Producto,
                 'mostrar' => $row -> mostrar,
                 'raiz' => $row -> raiz,
                 'vender' => $row -> vender,
@@ -86,7 +86,7 @@ if(isset($_GET['id']))
             ];
         }
     
-        echo json_encode($productos);
+        echo json_encode($almacen);
     }
     else
     {
