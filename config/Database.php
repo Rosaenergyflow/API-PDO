@@ -7,7 +7,7 @@ class Database
     // Database Properties.
 
     private $host = 'localhost';
-    private $db_name = 'astroflor';
+    private $db_name = 'db_name';
     private $username = 'root';
     private $password = '';
     private $connection = null;
